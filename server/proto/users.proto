@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package users;
+
+option go_package = "server/proto/proto_crud_user";
+
+service CRUDService {
+    rpc CreateUser(User) returns (UserResponse);
+    rpc ReadUser(UserId) returns (User);
+    rpc UpdateUser(User) returns (UserResponse);
+    rpc DeleteUser(UserId) returns (UserId);
+    rpc ListUsers(UserList) returns (UserList);
+    rpc Login(LoginRequest) returns (LoginResponse);
+}
+
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4; 
+}
+
+message UserId {
+    string id = 1;
+}
+
+message UserResponse {
+    string message = 1;
+}
+
+message UserList {
+    repeated User users = 1;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2; 
+}
+
+message LoginResponse {
+    string message = 1;
+    string token = 2; 
+}
