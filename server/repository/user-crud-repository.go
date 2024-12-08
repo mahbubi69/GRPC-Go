@@ -7,10 +7,6 @@ import (
 	"server/proto/proto_crud_user"
 )
 
-type ServerUser struct {
-	proto_crud_user.UnimplementedCRUDServiceServer
-}
-
 func (s *ServerUser) CreateUser(ctx context.Context, req *proto_crud_user.User) (*proto_crud_user.UserResponse, error) {
 	_, err := connection.DB.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
 		req.Name, req.Name, req.Email)
@@ -39,13 +35,13 @@ func (s *ServerUser) UpdateUser(ctx context.Context, req *proto_crud_user.User) 
 	return &proto_crud_user.UserResponse{Message: "User updated successfully"}, nil
 }
 
-// func (s *ServerUser) DeleteUser(ctx context.Context, req *proto_crud_user.UserId) (*empty.Empty, error) {
-// 	_, err := connection.DB.Exec("DELETE FROM users WHERE id = ?", req.Id)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return &empty.Empty{}, nil
-// }
+func (s *ServerUser) DeleteUser(ctx context.Context, req *proto_crud_user.UserId) (*proto_crud_user.UserId, error) {
+	_, err := connection.DB.Exec("DELETE FROM users WHERE id = ?", req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &proto_crud_user.UserId{}, nil
+}
 
 func (s *ServerUser) ListUsers(ctx context.Context, req *proto_crud_user.UserList) (*proto_crud_user.UserList, error) {
 	rows, err := connection.DB.Query("SELECT id, name, email FROM users")
