@@ -8,7 +8,7 @@ service CRUDService {
     rpc CreateUser(User) returns (UserResponse);
     rpc ReadUser(UserId) returns (User);
     rpc UpdateUser(User) returns (UserResponse);
-    rpc DeleteUser(UserId) returns (UserId);
+    rpc DeleteUser(UserId) returns (UserResponse);
     rpc ListUsers(UserList) returns (UserList);
     rpc Login(LoginRequest) returns (LoginResponse);
 }

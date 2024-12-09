@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	crudpb "server/proto/proto_crud"
+	crudpb "server/proto/proto_crud_test"
 
 	"google.golang.org/grpc"
 )

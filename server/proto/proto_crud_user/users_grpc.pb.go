@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.12.4
-// source: users.proto
+// source: server/proto/users.proto
 
 package proto_crud_user
 
@@ -34,7 +34,7 @@ type CRUDServiceClient interface {
 	CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResponse, error)
 	ReadUser(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*User, error)
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*UserResponse, error)
-	DeleteUser(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*UserId, error)
+	DeleteUser(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*UserResponse, error)
 	ListUsers(ctx context.Context, in *UserList, opts ...grpc.CallOption) (*UserList, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
@@ -77,9 +77,9 @@ func (c *cRUDServiceClient) UpdateUser(ctx context.Context, in *User, opts ...gr
 	return out, nil
 }
 
-func (c *cRUDServiceClient) DeleteUser(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*UserId, error) {
+func (c *cRUDServiceClient) DeleteUser(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*UserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UserId)
+	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, CRUDService_DeleteUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -114,7 +114,7 @@ type CRUDServiceServer interface {
 	CreateUser(context.Context, *User) (*UserResponse, error)
 	ReadUser(context.Context, *UserId) (*User, error)
 	UpdateUser(context.Context, *User) (*UserResponse, error)
-	DeleteUser(context.Context, *UserId) (*UserId, error)
+	DeleteUser(context.Context, *UserId) (*UserResponse, error)
 	ListUsers(context.Context, *UserList) (*UserList, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedCRUDServiceServer()
@@ -136,7 +136,7 @@ func (UnimplementedCRUDServiceServer) ReadUser(context.Context, *UserId) (*User,
 func (UnimplementedCRUDServiceServer) UpdateUser(context.Context, *User) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedCRUDServiceServer) DeleteUser(context.Context, *UserId) (*UserId, error) {
+func (UnimplementedCRUDServiceServer) DeleteUser(context.Context, *UserId) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedCRUDServiceServer) ListUsers(context.Context, *UserList) (*UserList, error) {
@@ -307,5 +307,5 @@ var CRUDService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "users.proto",
+	Metadata: "server/proto/users.proto",
 }

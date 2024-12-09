@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	crudpb "server/proto/proto_crud"
+	crudpb "server/proto/proto_crud_test"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "server/proto/proto_crud_product";
+
+service CRUDService {
+    rpc CreateProduct(Product) returns (ProductResponse);
+    rpc ReadProduct(ProductId) returns (Product);
+    rpc UpdateProduct(Product) returns (ProductResponse);
+    rpc DeleteProduct(ProductId) returns (ProductResponse);
+    rpc ListProducts(ProductList) returns (ProductList);
+}
+
+message Product {
+    uint32 id = 1;
+    string name = 2;
+    string category = 3;  
+    uint32 item = 4; 
+}
+
+message ProductId {
+    uint32 id = 1;
+}
+
+message ProductResponse {
+    string message = 1;
+    bool success = 2;
+    string status = 3; 
+}
+
+message ProductList {
+    string status = 1;
+    uint32 count = 2;   
+    repeated Product products = 3; 
+}
